@@ -1,0 +1,25 @@
+name: CI-CD-Pipeline-to-AWS
+env:
+ EB_PACKAGES_S3_BUCKET_NAME : "add.github.files"
+ EB_APPLICATION_NAME        : "MyWebsite"
+ EB_ENVIRONMENT_NAME        : "MyWebsite-env"
+ DEPLOY_PACKAGE_NAME        : "website_${{ github.sha }}.zip"
+ AWS_REGION_NAME            : "eu-central-1"
+ 
+on:
+ push:
+  branches: 
+   - main
+
+jobs:
+ my_ci_part: 
+  runs-on: ubuntu-latest 
+
+  steps:
+   - name: Git clone our repository
+     uses: actions/checkout@v1
+   - name: Create ZIP DEPLOYMENT package
+     run : zip -r ${{ env.DEPLOY_PACKAGE_NAME }} ./ -x *.git*
+     
+   
+  
